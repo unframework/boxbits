@@ -9,6 +9,8 @@ var coffeeify = require('coffeeify');
 var source = require('vinyl-source-stream');
 var rimraf = require('rimraf');
 
+var mainModuleName = 'unwidgets';
+
 var coffeeSrc = 'src/**/*.coffee';
 var coffeeMain = 'src/index.coffee';
 var previewSrc = 'preview/**';
@@ -17,7 +19,7 @@ var previewDestDir = '.tmp/preview';
 
 function buildCoffee() {
     var b = browserify({ basedir: __dirname });
-    b.add('./' + coffeeMain);
+    b.require('./' + coffeeMain, { expose: mainModuleName });
     b.transform(coffeeify);
 
     var output = b.bundle();
