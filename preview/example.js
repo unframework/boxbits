@@ -1,12 +1,12 @@
 
 un = require('unwidgets');
 
-var topBar = un.addBox().pullNorth().fillWidth();
+var topBar = un.box().north().wide();
 
-var topMenu = un.addBox().placeInside(topBar).pullWest();
+var topMenu = un.box().in(topBar).west();
 
-var topBarLogo = un.addBox().placeInside(topBar).center().makeIcon();
+var topBarLogo = un.icon().in(topBar).center();
 
-var tweetButton = un.addBox().placeInside(topBar).pullEast();
-var profileIcon = un.addBox().placeInside(topBar).pullEast();
-var searchBox = un.addBox().placeInside(topBar).pullEast();
+var tweetButton = un.box().in(topBar).east();
+var profileIcon = un.box().in(topBar).east();
+var searchBox = un.box().in(topBar).east();

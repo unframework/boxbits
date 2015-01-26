@@ -48,7 +48,7 @@ class Box
         anchorIsh._constrainToBottom @_top
         this
 
-    placeInside: (containerIsh) ->
+    in: (containerIsh) ->
         @_container = containerIsh
         solver.add(new c.Inequality(@_top, c.LEQ, @_container._top))
         solver.add(new c.Inequality(@_right, c.GEQ, @_container._right))
@@ -56,17 +56,17 @@ class Box
         solver.add(new c.Inequality(@_left, c.LEQ, @_container._left))
         this
 
-    pullNorth: () ->
+    north: () ->
         solver.add(new c.Equation(@_top, @_container._top))
         solver.add(new c.Equation(@_bottom, @_container._top, c.Strength.weak))
         this
 
-    pullWest: () ->
+    west: () ->
         solver.add(new c.Equation(@_left, @_container._left))
         solver.add(new c.Equation(@_right, @_container._left, c.Strength.weak))
         this
 
-    pullEast: () ->
+    east: () ->
         solver.add(new c.Equation(@_right, @_container._right))
         solver.add(new c.Equation(@_left, @_container._right, c.Strength.weak))
         this
@@ -76,13 +76,9 @@ class Box
         solver.add(new c.Equation(@_cy, @_container._cy, c.Strength.weak))
         this
 
-    fillWidth: () ->
+    wide: () ->
         solver.add(new c.Equation(@_left, @_container._left))
         solver.add(new c.Equation(@_right, @_container._right))
-        this
-
-    makeIcon: () ->
-        @_dom.css({ background: '#f00' })
         this
 
     _constrainInside: (cexprTop, cexprRight, cexprBottom, cexprLeft) ->
@@ -109,8 +105,13 @@ rootContainer = {
 window._root = rootContainer
 
 module.exports = {
-    addBox: ->
+    box: ->
         new Box(rootContainer)
+
+    icon: () ->
+        box = new Box(rootContainer)
+        box._dom.css({ background: '#f00' })
+        box
 }
 
 # module.exports.windowTop = ->
