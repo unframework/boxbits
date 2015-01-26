@@ -2,8 +2,8 @@
 c = require 'cassowary'
 $ = require 'jquery'
 
-c.trace = true
 solver = new c.SimplexSolver
+solver.autoSolve = false
 
 boxes = []
 
@@ -18,13 +18,19 @@ class Box
             boxShadow: '0 1px 1px rgba(0, 0, 0, 0.5)'
         }).appendTo(document.body)
 
-        @_left = new c.Variable({ value: 400 })
-        @_top = new c.Variable({ value: 400 })
-        @_right = new c.Variable({ value: 400 })
-        @_bottom = new c.Variable({ value: 400 })
+        @_left = new c.Variable({ value: 0 })
+        @_top = new c.Variable({ value: 0 })
+        @_right = new c.Variable({ value: 0 })
+        @_bottom = new c.Variable({ value: 0 })
+        @_cx = new c.Variable({ value: 0 })
+        @_cy = new c.Variable({ value: 0 })
 
         solver.add(new c.Inequality(c.minus(@_right, @_left), c.GEQ, 100))
         solver.add(new c.Inequality(c.minus(@_bottom, @_top), c.GEQ, 100))
+        solver.add(new c.Equation(@_cx, c.times(c.plus(@_left, @_right), 0.5)))
+        solver.add(new c.Equation(@_cy, c.times(c.plus(@_top, @_bottom), 0.5)))
+        solver.add(new c.Equation(@_left, @_right, c.Strength.weak))
+        solver.add(new c.Equation(@_top, @_bottom, c.Strength.weak))
 
         @_updateDom()
 
@@ -44,10 +50,10 @@ class Box
 
     placeInside: (containerIsh) ->
         @_container = containerIsh
-        solver.add(new c.Inequality(@_top, c.GEQ, @_container._top))
-        solver.add(new c.Inequality(@_right, c.LEQ, @_container._right))
-        solver.add(new c.Inequality(@_bottom, c.LEQ, @_container._bottom))
-        solver.add(new c.Inequality(@_left, c.GEQ, @_container._left))
+        solver.add(new c.Inequality(@_top, c.LEQ, @_container._top))
+        solver.add(new c.Inequality(@_right, c.GEQ, @_container._right))
+        solver.add(new c.Inequality(@_bottom, c.GEQ, @_container._bottom))
+        solver.add(new c.Inequality(@_left, c.LEQ, @_container._left))
         this
 
     pullNorth: () ->
@@ -66,12 +72,8 @@ class Box
         this
 
     center: () ->
-        cx = c.times(c.plus(@_container._left, @_container._right), 0.5)
-        cy = c.times(c.plus(@_container._top, @_container._bottom), 0.5)
-        solver.add(new c.Equation(@_left, cx, c.Strength.weak))
-        solver.add(new c.Equation(@_right, cx, c.Strength.weak))
-        solver.add(new c.Equation(@_top, cy, c.Strength.weak))
-        solver.add(new c.Equation(@_bottom, cy, c.Strength.weak))
+        solver.add(new c.Equation(@_cx, @_container._cx, c.Strength.weak))
+        solver.add(new c.Equation(@_cy, @_container._cy, c.Strength.weak))
         this
 
     fillWidth: () ->
@@ -100,6 +102,8 @@ rootContainer = {
     _top: new c.Expression(0)
     _right: new c.Expression(1000)
     _bottom: new c.Expression(800)
+    _cx: new c.Expression(500)
+    _cy: new c.Expression(400)
 }
 
 window._root = rootContainer
