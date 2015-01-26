@@ -44,10 +44,6 @@ class Box
             height: "#{ @_bottom.value - @_top.value }px"
         })
 
-    attachBelow: (anchorIsh) ->
-        anchorIsh._constrainToBottom @_top
-        this
-
     in: (containerIsh) ->
         @_container = containerIsh
         solver.add(new c.Inequality(@_top, c.LEQ, @_container._top))
@@ -80,10 +76,6 @@ class Box
         solver.add(new c.Equation(@_left, @_container._left))
         solver.add(new c.Equation(@_right, @_container._right))
         this
-
-    _constrainInside: (cexprTop, cexprRight, cexprBottom, cexprLeft) ->
-        solver.add(new c.Inequality(cexprTop, c.GEQ, @_top))
-        solver.add(new c.Inequality(cexprTop, c.GEQ, @_top))
 
 window.setInterval ->
     solver.resolve()
