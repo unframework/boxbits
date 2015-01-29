@@ -8,7 +8,7 @@ solver.autoSolve = false
 boxes = []
 
 class Box
-    constructor: (containerIsh) ->
+    constructor: (containerIsh, size) ->
         @_container = containerIsh
 
         @_dom = $('<div></div>').css({
@@ -20,17 +20,15 @@ class Box
 
         @_left = new c.Variable({ value: 0 })
         @_top = new c.Variable({ value: 0 })
-        @_right = new c.Variable({ value: 0 })
-        @_bottom = new c.Variable({ value: 0 })
-        @_cx = new c.Variable({ value: 0 })
-        @_cy = new c.Variable({ value: 0 })
+        @_right = new c.Variable({ value: size || 10 })
+        @_bottom = new c.Variable({ value: size || 10 })
+        @_cx = new c.Variable({ value: (size || 10) / 2 })
+        @_cy = new c.Variable({ value: (size || 10) / 2 })
 
-        solver.add(new c.Inequality(c.minus(@_right, @_left), c.GEQ, 100))
-        solver.add(new c.Inequality(c.minus(@_bottom, @_top), c.GEQ, 100))
+        solver.add(new c.Inequality(c.minus(@_right, @_left), c.GEQ, size || 10))
+        solver.add(new c.Inequality(c.minus(@_bottom, @_top), c.GEQ, size || 10))
         solver.add(new c.Equation(@_cx, c.times(c.plus(@_left, @_right), 0.5)))
         solver.add(new c.Equation(@_cy, c.times(c.plus(@_top, @_bottom), 0.5)))
-        solver.add(new c.Equation(@_left, @_right, c.Strength.weak))
-        solver.add(new c.Equation(@_top, @_bottom, c.Strength.weak))
 
         @_updateDom()
 
@@ -46,27 +44,30 @@ class Box
 
     in: (containerIsh) ->
         @_container = containerIsh
-        solver.add(new c.Inequality(@_top, c.LEQ, @_container._top))
-        solver.add(new c.Inequality(@_right, c.GEQ, @_container._right))
-        solver.add(new c.Inequality(@_bottom, c.GEQ, @_container._bottom))
-        solver.add(new c.Inequality(@_left, c.LEQ, @_container._left))
+        solver.add(new c.Inequality(@_top, c.GEQ, @_container._top))
+        solver.add(new c.Inequality(@_right, c.LEQ, @_container._right))
+        solver.add(new c.Inequality(@_bottom, c.LEQ, @_container._bottom))
+        solver.add(new c.Inequality(@_left, c.GEQ, @_container._left))
         this
 
     north: () ->
         solver.add(new c.Equation(@_top, @_container._top))
+        solver.add(new c.Equation(@_cx, @_container._cx))
         this
 
     west: () ->
         solver.add(new c.Equation(@_left, @_container._left))
+        solver.add(new c.Equation(@_cy, @_container._cy))
         this
 
     east: () ->
         solver.add(new c.Equation(@_right, @_container._right))
+        solver.add(new c.Equation(@_cy, @_container._cy))
         this
 
     center: () ->
-        solver.add(new c.Equation(@_cx, @_container._cx, c.Strength.weak))
-        solver.add(new c.Equation(@_cy, @_container._cy, c.Strength.weak))
+        solver.add(new c.Equation(@_cx, @_container._cx))
+        solver.add(new c.Equation(@_cy, @_container._cy))
         this
 
     wide: () ->
@@ -98,7 +99,7 @@ module.exports = {
         new Box(rootContainer)
 
     icon: () ->
-        box = new Box(rootContainer)
+        box = new Box(rootContainer, 100)
         box._dom.css({ background: '#f00' })
         box
 }
