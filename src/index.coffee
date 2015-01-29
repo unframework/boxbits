@@ -54,17 +54,14 @@ class Box
 
     north: () ->
         solver.add(new c.Equation(@_top, @_container._top))
-        solver.add(new c.Equation(@_bottom, @_container._top, c.Strength.weak))
         this
 
     west: () ->
         solver.add(new c.Equation(@_left, @_container._left))
-        solver.add(new c.Equation(@_right, @_container._left, c.Strength.weak))
         this
 
     east: () ->
         solver.add(new c.Equation(@_right, @_container._right))
-        solver.add(new c.Equation(@_left, @_container._right, c.Strength.weak))
         this
 
     center: () ->
