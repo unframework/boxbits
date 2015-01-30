@@ -9,7 +9,7 @@ var coffeeify = require('coffeeify');
 var source = require('vinyl-source-stream');
 var rimraf = require('rimraf');
 
-var mainModuleName = 'unwidgets';
+var mainModuleName = 'boxbits';
 
 var coffeeSrc = 'src/**/*.coffee';
 var coffeeMain = 'src/index.coffee';
