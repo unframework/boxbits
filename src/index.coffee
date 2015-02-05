@@ -1,6 +1,10 @@
 
 c = require 'cassowary'
 $ = require 'jquery'
+fs = require 'fs'
+insertStyle = require 'insert-css'
+
+insertStyle fs.readFileSync __dirname + '/reset.css', 'utf8'
 
 solver = new c.SimplexSolver
 solver.autoSolve = false
@@ -125,7 +129,7 @@ rootContainer = {
 
 window._root = rootContainer
 
-module.exports = {
+global.b = module.exports = {
     box: ->
         new Box()
 

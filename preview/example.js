@@ -1,5 +1,5 @@
 
-b = require('boxbits');
+b = window.b;
 
 b.display(
     b.overlap([
