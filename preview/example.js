@@ -2,7 +2,7 @@
 b = require('boxbits');
 
 b.display(
-    b.overlap([
+    b.layers([
         b.west(topMenu = b.box()),
         b.center(topBarLogo = b.icon()),
         b.east(
