@@ -20,5 +20,8 @@
   "main": "src/index.coffee",
   "browserify": {
     "transform": ["coffeeify", "brfs"]
+  },
+  "scripts": {
+    "preview" : "browserify src/index.coffee -o ./preview/boxbits.js"
   }
 }

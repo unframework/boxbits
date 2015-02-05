@@ -1,10 +1,5 @@
-var fs = require('fs');
-var insertStyle = require('insert-css');
 
-var css = fs.readFileSync(__dirname + '/reset.css', 'utf8');
-insertStyle(css);
-
-var b = require('../');
+b = window.b;
 
 b.display(
     b.overlap([
