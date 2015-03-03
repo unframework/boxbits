@@ -14,23 +14,23 @@ flexChild = (spec) ->
             [ spec, null ]
 
     h 'div', style: {
-        'flex-basis': if grow then 0 else null
-        'flex-grow': grow
+        flexBasis: if grow then 0 else null
+        flexGrow: grow
     }, content
 
 module.exports = {
     column: (specList...) ->
         h 'div', style: {
             display: 'flex'
-            'justify-content': 'space-between'
-            'flex-direction': 'column'
+            justifyContent: 'space-between'
+            flexDirection: 'column'
         }, ((h 'div', spec) for spec in specList)
 
     row: (specList...) ->
         h 'div', style: {
             display: 'flex'
-            'justify-content': 'space-between'
-            'flex-direction': 'row'
+            justifyContent: 'space-between'
+            flexDirection: 'row'
         }, ((flexChild spec) for spec in specList)
 
     box: () ->
@@ -38,6 +38,8 @@ module.exports = {
             background: '#f00'
             width: '40px'
             height: '40px'
+            boxShadow: '0 1px 5px -1px rgba(0,0,0,0.2)'
+            borderRadius: '3px'
         }
 
     icon: () ->
@@ -45,6 +47,8 @@ module.exports = {
             background: '#0f0'
             width: '40px'
             height: '40px'
+            boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+            borderRadius: '3px'
         }
 
     display: (vdom) ->
