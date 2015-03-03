@@ -6,38 +6,38 @@ $ = require 'jquery'
 # note: by default, parent dictates display? or opposite?
 # seems as though many elements have a fixed size, so it's more likely for compound parent to listen to children
 
-flexChild = (spec) ->
-    [ content, grow ] =
-        if Object.prototype.hasOwnProperty.call spec, 'length'
-            [ spec[0], 1 ]
-        else
-            [ spec, null ]
+# every element assumes it is inside a flexbox flow
 
-    h 'div', style: {
-        flexBasis: if grow then 0 else null
-        flexGrow: grow
-    }, content
+# an icon has a fixed size, etc
+# row lines up items to stretch them (add spacers as needed), but vertically aligns (no stretch)
+# avoid relying on variable things like text for sizing (what about height?)
 
 module.exports = {
     column: (specList...) ->
         h 'div', style: {
             display: 'flex'
-            justifyContent: 'space-between'
+            justifyContent: 'space-around'
             flexDirection: 'column'
-        }, ((h 'div', spec) for spec in specList)
+        }, ((spec) for spec in specList)
 
     row: (specList...) ->
         h 'div', style: {
             display: 'flex'
-            justifyContent: 'space-between'
+            justifyContent: 'space-around'
             flexDirection: 'row'
-        }, ((flexChild spec) for spec in specList)
+        }, ((spec) for spec in specList)
+
+    spacer: (vdom) ->
+        h 'div', style: {
+            flex: 1
+        }, vdom
 
     box: () ->
         h 'div', style: {
             background: '#f00'
-            width: '40px'
-            height: '40px'
+            margin: 'auto' # center in flex
+            width: Math.round(1 + Math.random() * 4) * 20 + 'px'
+            height: Math.round(1 + Math.random() * 4) * 20 + 'px'
             boxShadow: '0 1px 5px -1px rgba(0,0,0,0.2)'
             borderRadius: '3px'
         }
@@ -45,8 +45,9 @@ module.exports = {
     icon: () ->
         h 'div', style: {
             background: '#0f0'
-            width: '40px'
-            height: '40px'
+            margin: 'auto' # center in flex
+            width: Math.round(1 + Math.random() * 4) * 20 + 'px'
+            height: Math.round(1 + Math.random() * 4) * 20 + 'px'
             boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
             borderRadius: '3px'
         }
