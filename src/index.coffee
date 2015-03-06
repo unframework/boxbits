@@ -42,12 +42,13 @@ module.exports = {
             borderRadius: '3px'
         }
 
-    icon: () ->
+    icon: (width, height, imageData) ->
         h 'div', style: {
-            background: '#0f0'
+            background: 'url(data:application/octet-stream;base64,' + imageData + ')'
+            backgroundSize: 1 * width + 'px ' + 1 * height + 'px'
             margin: 'auto' # center in flex
-            width: Math.round(1 + Math.random() * 4) * 20 + 'px'
-            height: Math.round(1 + Math.random() * 4) * 20 + 'px'
+            width: width + 'px'
+            height: height + 'px'
             boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
             borderRadius: '3px'
         }
