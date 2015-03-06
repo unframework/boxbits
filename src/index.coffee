@@ -49,8 +49,6 @@ module.exports = {
             margin: 'auto' # center in flex
             width: width + 'px'
             height: height + 'px'
-            boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
-            borderRadius: '3px'
         }
 
     display: (vdom) ->
