@@ -10,13 +10,14 @@ var hamburgerIcon = 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABTklEQVR4Xu2
 b.display(
     b.column(
         b.row(
-            b.icon(32, 32, hamburgerIcon),
+            b.box(
+                { padding: 5 },
+                b.box({ padding: 10, backgroundColor: '#fff', borderRadius: 3 }, b.icon(32, 32, hamburgerIcon))
+            ),
             b.spacer(),
-            b.icon(100, 100, topBarLogo),
+            b.icon(48, 48, topBarLogo),
             b.spacer(),
-            b.text('Welcome to Boxbits'),
-            b.box('profileIcon'),
-            b.box('statusButton')
+            b.box({ padding: 15 }, b.text('Welcome to Boxbits'))
         )
     )
 )

@@ -32,15 +32,13 @@ module.exports = {
             flex: 1
         }, vdom
 
-    box: () ->
+    box: (opts, content) ->
         h 'div', style: {
-            background: '#f00'
             margin: 'auto' # center in flex
-            width: Math.round(1 + Math.random() * 4) * 20 + 'px'
-            height: Math.round(1 + Math.random() * 4) * 20 + 'px'
-            boxShadow: '0 1px 5px -1px rgba(0,0,0,0.2)'
-            borderRadius: '3px'
-        }
+            padding: (opts.padding || 0) * 1 + 'px'
+            borderRadius: (opts.borderRadius || 0) * 1 + 'px'
+            backgroundColor: (opts.backgroundColor || 'transparent')
+        }, content
 
     text: (content) ->
         h 'div', style: {
