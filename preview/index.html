@@ -6,6 +6,42 @@
 
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type="text/css">
+
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #container {
+            position: relative;
+            margin: auto;
+            width: 480px;
+            height: 720px;
+            background: #ecf0f1;
+            border: 3px #95a5a6 solid;
+            border-radius: 3px;
+            box-shadow: 0 3px 0 #bdc3c7;
+        }
+
+        #container:after {
+            content: '';
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            height: 2px;
+            z-index: 1;
+            background: #000;
+            opacity: 0.1;
+        }
+    </style>
   </head>
   <body>
     <div id="container"></div>
