@@ -42,8 +42,25 @@ module.exports = {
             borderRadius: '3px'
         }
 
+    text: (content) ->
+        h 'div', style: {
+            flexGrow: 0
+            flexShrink: 0
+            margin: 'auto' # center in flex
+            fontFamily: 'Open Sans'
+            fontWeight: 300
+            fontSize: '16px'
+            lineHeight: '16px'
+            whiteSpace: 'nowrap'
+            width: 'auto'
+            height: '18px' # compensate for ascenders
+            overflow: 'hidden'
+        }, '' + content
+
     icon: (width, height, imageData) ->
         h 'div', style: {
+            flexGrow: 0
+            flexShrink: 0
             background: 'url(data:application/octet-stream;base64,' + imageData + ')'
             backgroundSize: 1 * width + 'px ' + 1 * height + 'px'
             margin: 'auto' # center in flex

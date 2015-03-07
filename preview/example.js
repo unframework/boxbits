@@ -14,7 +14,7 @@ b.display(
             b.spacer(),
             b.icon(100, 100, topBarLogo),
             b.spacer(),
-            b.box('searchBox'),
+            b.text('Welcome to Boxbits'),
             b.box('profileIcon'),
             b.box('statusButton')
         )
