@@ -1,139 +1,56 @@
 
-c = require 'cassowary'
+h = require 'virtual-dom/h'
+createElement = require 'virtual-dom/create-element'
 $ = require 'jquery'
 
-solver = new c.SimplexSolver
-solver.autoSolve = false
+# note: by default, parent dictates display? or opposite?
+# seems as though many elements have a fixed size, so it's more likely for compound parent to listen to children
 
-boxes = []
+# every element assumes it is inside a flexbox flow
 
-class Box
-    constructor: (w, h, cssColor) ->
-        @_finalWidth = w || 10 # @todo cast to number
-        @_finalHeight = h || 10 # @todo cast to number
-
-        @_wExpr = new c.Expression(@_finalWidth)
-        @_hExpr = new c.Expression(@_finalHeight)
-        @_cxExpr = new c.Variable({ value: 0 })
-        @_cyExpr = new c.Variable({ value: 0 })
-
-        @_dom = $('<div></div>').css({
-            position: 'absolute'
-            boxSizing: 'border-box'
-            transition: 'top 0.8s ease-in, left 0.8s ease-in, width 0.8s ease-in, height 0.8s ease-in'
-            background: cssColor || 'rgba(255, 127, 0, 0.3)'
-            boxShadow: '0 1px 1px rgba(0, 0, 0, 0.5)'
-            width: "#{ @_finalWidth }px"
-            height: "#{ @_finalHeight }px"
-        }).appendTo(document.body)
-
-        @_updateDom()
-
-        boxes.push this
-
-    _updateDom: ->
-        @_dom.css({
-            left: "#{ @_cxExpr.value - @_finalWidth * 0.5 }px"
-            top: "#{ @_cyExpr.value - @_finalHeight * 0.5 }px"
-        })
-
-class Layers
-    constructor: (boxList) ->
-        @_wExpr = new c.Variable({ value: 0 })
-        @_hExpr = new c.Variable({ value: 0 })
-        @_cxExpr = new c.Variable({ value: 0 })
-        @_cyExpr = new c.Variable({ value: 0 })
-
-        for b in boxList
-            solver.add new c.Equation(@_cxExpr, b._cxExpr)
-            solver.add new c.Equation(@_cyExpr, b._cyExpr)
-            solver.add new c.Equation(@_wExpr, b._wExpr)
-            solver.add new c.Equation(@_hExpr, b._hExpr)
-
-class Aligner
-    constructor: (box, xPos, yPos) ->
-        @_wExpr = new c.Variable({ value: 0 })
-        @_hExpr = new c.Variable({ value: 0 })
-        @_cxExpr = new c.Variable({ value: 0 })
-        @_cyExpr = new c.Variable({ value: 0 })
-
-        solver.add new c.Equation(c.plus(@_cxExpr, c.times @_wExpr, 0.5 * xPos), c.plus(box._cxExpr, c.times box._wExpr, 0.5 * xPos))
-        solver.add new c.Equation(c.plus(@_cyExpr, c.times @_hExpr, 0.5 * yPos), c.plus(box._cyExpr, c.times box._hExpr, 0.5 * yPos))
-        solver.add new c.Inequality(@_wExpr, c.GEQ, box._wExpr)
-        solver.add new c.Inequality(@_hExpr, c.GEQ, box._hExpr)
-
-        @_dom = $('<div></div>').css({
-            position: 'absolute'
-            boxSizing: 'border-box'
-            transition: 'top 0.8s ease-in, left 0.8s ease-in, width 0.8s ease-in, height 0.8s ease-in'
-            background: 'rgba(127, 255, 0, 0.3)'
-            boxShadow: '0 1px 1px rgba(0, 0, 0, 0.5)'
-        }).appendTo(document.body)
-
-        @_updateDom()
-
-        boxes.push this
-
-    _updateDom: ->
-        @_dom.css({
-            left: "#{ @_cxExpr.value - @_wExpr.value * 0.5 }px"
-            top: "#{ @_cyExpr.value - @_hExpr.value * 0.5 }px"
-            width: "#{ @_wExpr.value }px"
-            height: "#{ @_hExpr.value }px"
-        })
-
-class Row
-    constructor: (boxList) ->
-        @_wExpr = new c.Variable({ value: 0 })
-        @_hExpr = new c.Variable({ value: 0 })
-        @_cxExpr = new c.Variable({ value: 0 })
-        @_cyExpr = new c.Variable({ value: 0 })
-
-        wSum = 0
-        leftExpr = c.minus @_cxExpr, c.times(@_wExpr, 0.5)
-
-        for b in boxList
-            solver.add new c.Equation(b._cxExpr, c.plus leftExpr, c.times(b._wExpr, 0.5))
-            solver.add new c.Equation(b._cyExpr, @_cyExpr)
-            solver.add new c.Inequality(@_hExpr, c.GEQ, b._hExpr)
-            wSum = c.plus wSum, b._wExpr
-            leftExpr = c.plus leftExpr, b._wExpr
-
-        solver.add new c.Equation(@_wExpr, wSum)
-
-window.setInterval ->
-    solver.resolve()
-
-    for b in boxes
-        b._updateDom()
-
-, 500
+# an icon has a fixed size, etc
+# row lines up items to stretch them (add spacers as needed), but vertically aligns (no stretch)
+# avoid relying on variable things like text for sizing (what about height?)
 
 module.exports = {
-    box: ->
-        new Box()
+    column: (specList...) ->
+        h 'div', style: {
+            display: 'flex'
+            justifyContent: 'space-around'
+            flexDirection: 'column'
+        }, ((spec) for spec in specList)
 
-    icon: () ->
-        new Box(10, 100, '#f00')
+    row: (specList...) ->
+        h 'div', style: {
+            display: 'flex'
+            justifyContent: 'space-around'
+            flexDirection: 'row'
+        }, ((spec) for spec in specList)
 
-    layers: (boxList) ->
-        new Layers(boxList)
+    spacer: (vdom) ->
+        h 'div', style: {
+            flex: 1
+        }, vdom
 
-    east: (box) ->
-        new Aligner(box, 1, 0)
+    box: () ->
+        h 'div', style: {
+            background: '#f00'
+            margin: 'auto' # center in flex
+            width: Math.round(1 + Math.random() * 4) * 20 + 'px'
+            height: Math.round(1 + Math.random() * 4) * 20 + 'px'
+            boxShadow: '0 1px 5px -1px rgba(0,0,0,0.2)'
+            borderRadius: '3px'
+        }
 
-    west: (box) ->
-        new Aligner(box, -1, 0)
+    icon: (width, height, imageData) ->
+        h 'div', style: {
+            background: 'url(data:application/octet-stream;base64,' + imageData + ')'
+            backgroundSize: 1 * width + 'px ' + 1 * height + 'px'
+            margin: 'auto' # center in flex
+            width: width + 'px'
+            height: height + 'px'
+        }
 
-    row: (boxList) ->
-        new Row(boxList)
-
-    center: (box) ->
-        new Aligner(box, 0, 0)
-
-    display: (b) ->
-        solver.add new c.Equation(b._cxExpr, 300)
-        solver.add new c.Equation(b._cyExpr, 300)
-        solver.add new c.Equation(b._wExpr, 300)
-        solver.add new c.Equation(b._hExpr, 300)
+    display: (vdom) ->
+        $('#container').append createElement vdom
 }
