@@ -18,6 +18,15 @@ b.display(
             b.icon(48, 48, topBarLogo),
             b.spacer(),
             b.box({ padding: 15 }, b.text('Welcome to Boxbits'))
+        ),
+        b.spacer(),
+        b.box(
+            { padding: 5, backgroundColor: '#fff', expand: true },
+            b.row(
+                b.spacer(),
+                b.text('Bottom menu'),
+                b.spacer()
+            )
         )
     )
 )

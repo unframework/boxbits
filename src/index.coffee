@@ -16,6 +16,7 @@ module.exports = {
     column: (specList...) ->
         h 'div', style: {
             display: 'flex'
+            height: '100%'
             justifyContent: 'space-around'
             flexDirection: 'column'
         }, ((spec) for spec in specList)
@@ -23,6 +24,7 @@ module.exports = {
     row: (specList...) ->
         h 'div', style: {
             display: 'flex'
+            width: '100%'
             justifyContent: 'space-around'
             flexDirection: 'row'
         }, ((spec) for spec in specList)
@@ -34,7 +36,7 @@ module.exports = {
 
     box: (opts, content) ->
         h 'div', style: {
-            margin: 'auto' # center in flex
+            margin: if opts.expand then 0 else 'auto' # center or expand in flex
             padding: (opts.padding || 0) * 1 + 'px'
             borderRadius: (opts.borderRadius || 0) * 1 + 'px'
             backgroundColor: (opts.backgroundColor || 'transparent')
