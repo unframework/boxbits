@@ -19,7 +19,8 @@ b.display(
             b.spacer(),
             b.box({ padding: 15 }, b.text('Welcome to Boxbits'))
         )),
-        b.verticalScroll(b.box({ expand: true, padding: 5, backgroundColor: '#fff' }, b.column(
+        b.verticalScroll(b.box({ expand: true, padding: 10, backgroundColor: '#fff' }, b.list(
+            { spacing: 5 },
             b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#f1c40f' }, b.text('Item A')),
             b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e67e22' }, b.text('Item B')),
             b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e74c3c' }, b.text('Item C')),

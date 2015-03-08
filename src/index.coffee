@@ -18,7 +18,7 @@ module.exports = {
             flex: 1
 
             display: 'flex'
-            justifyContent: 'space-around'
+            justifyContent: 'space-around' # automatic centering when just one item
             flexDirection: 'column'
         }, ((spec) for spec in specList)
 
@@ -27,7 +27,7 @@ module.exports = {
             flex: 1
 
             display: 'flex'
-            justifyContent: 'space-around'
+            justifyContent: 'space-around' # automatic centering when just one item
             flexDirection: 'row'
         }, ((spec) for spec in specList)
 
@@ -52,10 +52,26 @@ module.exports = {
             flex: 1 # fill available space
             overflowX: 'hidden'
             overflowY: 'scroll'
-        }, h 'div', {
+        }, h 'div', style: {
             display: 'flex'
             flexDirection: 'column'
         }, content
+
+    list: (opts, specList...) ->
+        separator = (opts.spacing || 0) + 'px'
+
+        h 'div', style: {
+            flex: 1
+
+            display: 'flex'
+            justifyContent: 'flex-start'
+            flexDirection: 'inherit' # @todo more explicit?
+        }, (for spec, i in specList
+            [
+                if i is 0 then null else h 'div', style: { flexGrow: 0, flexShrink: 0, flexBasis: separator }
+                spec
+            ]
+        )
 
     text: (content) ->
         h 'div', style: {
