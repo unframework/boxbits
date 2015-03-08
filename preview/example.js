@@ -9,7 +9,7 @@ var hamburgerIcon = 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABTklEQVR4Xu2
 
 b.display(
     b.column(
-        b.row(
+        b.box({ expand: true }, b.row(
             b.box(
                 { padding: 5 },
                 b.box({ padding: 10, backgroundColor: '#fff', borderRadius: 3 }, b.icon(32, 32, hamburgerIcon))
@@ -18,8 +18,21 @@ b.display(
             b.icon(48, 48, topBarLogo),
             b.spacer(),
             b.box({ padding: 15 }, b.text('Welcome to Boxbits'))
-        ),
-        b.spacer(),
+        )),
+        b.verticalScroll(b.box({ expand: true, padding: 5, backgroundColor: '#fff' }, b.column(
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#f1c40f' }, b.text('Item A')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e67e22' }, b.text('Item B')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e74c3c' }, b.text('Item C')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#f1c40f' }, b.text('Item A')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e67e22' }, b.text('Item B')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e74c3c' }, b.text('Item C')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#f1c40f' }, b.text('Item A')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e67e22' }, b.text('Item B')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e74c3c' }, b.text('Item C')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#f1c40f' }, b.text('Item A')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e67e22' }, b.text('Item B')),
+            b.box({ expand: true, padding: 30, borderRadius: 5, backgroundColor: '#e74c3c' }, b.text('Item C'))
+        ))),
         b.box(
             { padding: 5, backgroundColor: '#fff', expand: true },
             b.row(

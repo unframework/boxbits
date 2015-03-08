@@ -15,16 +15,18 @@ $ = require 'jquery'
 module.exports = {
     column: (specList...) ->
         h 'div', style: {
+            flex: 1
+
             display: 'flex'
-            height: '100%'
             justifyContent: 'space-around'
             flexDirection: 'column'
         }, ((spec) for spec in specList)
 
     row: (specList...) ->
         h 'div', style: {
+            flex: 1
+
             display: 'flex'
-            width: '100%'
             justifyContent: 'space-around'
             flexDirection: 'row'
         }, ((spec) for spec in specList)
@@ -40,6 +42,19 @@ module.exports = {
             padding: (opts.padding || 0) * 1 + 'px'
             borderRadius: (opts.borderRadius || 0) * 1 + 'px'
             backgroundColor: (opts.backgroundColor || 'transparent')
+
+            display: 'flex'
+            flexDirection: 'inherit' # @todo this just seems like an intuitive value
+        }, content
+
+    verticalScroll: (content) ->
+        h 'div', style: {
+            flex: 1 # fill available space
+            overflowX: 'hidden'
+            overflowY: 'scroll'
+        }, h 'div', {
+            display: 'flex'
+            flexDirection: 'column'
         }, content
 
     text: (content) ->
