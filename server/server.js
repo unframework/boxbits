@@ -1,10 +1,9 @@
 var http = require('http')
 var finalhandler = require('finalhandler')
-var serveStatic = require('serve-static')
 var b = require('browserify')();
 var concat = require('concat-stream')
 
-var serve = serveStatic(__dirname + '/static', {'index': ['index.html', 'index.htm']})
+var baseHtml = '<!DOCTYPE html><html><body><div id="container"></div><script src="main.js"></script></body></html>';
 
 module.exports = function (jsFile) {
     var jsCache;
@@ -17,12 +16,14 @@ module.exports = function (jsFile) {
     var server = http.createServer(function(req, res){
         var done = finalhandler(req, res)
 
-        if (req.url == '/main.js') {
+        if (req.url === '/main.js') {
             res.setHeader('Content-Type', 'application/javascript');
             res.end(jsCache.toString());
-        }
-        else {
-            serve(req, res, done);
+        } else if (req.url === '/') {
+            res.setHeader('Content-Type', 'text/html');
+            res.end(baseHtml);
+        } else {
+            done();
         }
     });
 

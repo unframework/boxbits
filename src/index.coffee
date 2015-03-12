@@ -12,6 +12,9 @@ $ = require 'jquery'
 # row lines up items to stretch them (add spacers as needed), but vertically aligns (no stretch)
 # avoid relying on variable things like text for sizing (what about height?)
 
+# @todo reconsider how this is done
+$('head').append('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />')
+
 module.exports = {
     column: (specList...) ->
         h 'div', style: {
