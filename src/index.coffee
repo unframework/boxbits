@@ -50,6 +50,17 @@ module.exports = {
             flexDirection: 'inherit' # @todo this just seems like an intuitive value
         }, content
 
+    button: (contents..., handler) ->
+        h 'button', onclick: handler, style: {
+            margin: 0
+            padding: 0
+            flex: 1
+
+            display: 'flex'
+            justifyContent: 'space-around' # automatic centering when just one item
+            flexDirection: 'row'
+        }, contents
+
     verticalScroll: (content) ->
         h 'div', style: {
             flex: 1 # fill available space
