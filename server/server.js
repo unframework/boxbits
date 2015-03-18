@@ -1,7 +1,8 @@
-var http = require('http')
-var finalhandler = require('finalhandler')
+var http = require('http');
+var WebSocketServer = require('ws').Server;
+var finalhandler = require('finalhandler');
 var browserify = require('browserify');
-var concat = require('concat-stream')
+var concat = require('concat-stream');
 
 var baseHtml = '<!DOCTYPE html><html><body><div id="container"></div><script src="bridge.js"></script><script src="main.js"></script></body></html>';
 
@@ -34,4 +35,12 @@ module.exports = function (jsFile) {
     });
 
     server.listen(3000);
+
+    var bridgeServer = new WebSocketServer({ port: 9090 });
+
+    bridgeServer.on('connection', function connection(ws) {
+        ws.on('message', function incoming(message) {
+            console.log('received: %s', message);
+        });
+    });
 }
