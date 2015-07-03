@@ -152,6 +152,6 @@ module.exports = {
   },
 
   display: function(vdom) {
-    return $('#container').append(createElement(vdom));
+    return document.body.appendChild(createElement(vdom));
   }
 };
