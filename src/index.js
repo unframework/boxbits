@@ -1,6 +1,5 @@
 var h = require('virtual-dom/h');
 var createElement = require('virtual-dom/create-element');
-var $ = require('jquery');
 
 // note: by default, parent dictates display? or opposite?
 // seems as though many elements have a fixed size, so it's more likely for compound parent to listen to children
@@ -12,7 +11,11 @@ var $ = require('jquery');
 // avoid relying on variable things like text for sizing (what about height?)
 
 // @todo reconsider how this is done
-$('head').append('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />');
+document.getElementsByTagName('head')[0].appendChild((function (html) {
+  var span = document.createElement('span');
+  span.innerHTML = html;
+  return span.firstChild;
+})('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />'));
 
 module.exports = {
   column: function() {
