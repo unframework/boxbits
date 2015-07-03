@@ -1,5 +1,4 @@
 var h = require('virtual-dom/h');
-var createElement = require('virtual-dom/create-element');
 
 // note: by default, parent dictates display? or opposite?
 // seems as though many elements have a fixed size, so it's more likely for compound parent to listen to children
@@ -152,9 +151,5 @@ module.exports = {
                 height: height + 'px'
             }
         });
-    },
-
-    display: function(vdom) {
-        return document.body.appendChild(createElement(vdom));
     }
 };
