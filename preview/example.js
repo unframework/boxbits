@@ -8,7 +8,14 @@ var topBarLogo = 'iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAVA0lEQVR4Xu1dC3
 // from https://www.iconfinder.com/icons/134216/hamburger_lines_menu_icon#size=64
 var hamburgerIcon = 'iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABTklEQVR4Xu2bsWrDQBBEpd4hMaR2nc6tq3SuDQH/Sn7DP+Jg/0AqQ+rUxqVLYxPnBzJXCGJxx7nVzhMsCOkKzezMaVmt2sb8aM3xNxCAAswZwALmAmATxAJYwJwBLFAQwETXV4pXxfPARXLS8+8U74pDH0tOAQn8t2I8cOD9xz/rwlRx/H8jR8CHFrwFA9/BWetkWSPgqgUPQQn4Ea6nGgG/WjAKSkBK7mONgK0WLIISsOnbO7cHvGjRV8BN8CJMM8W+poB0v3sNzgPsB0n2n4q7X4NB1Z+HRSVole4MWBSAAswZwALmAig2RekHBCyF6QcoqfQD6AfQD7ht99EPKNQB9ANcCiRKYZdMl3CiABRgzgAWMBcA/QDmAzIWYD4gwPfA0tbGfICYYT6g9nmc+QDmA4yqI0pho2RnoaIAFGDOABYwFwA/TWEBLGDOwB8GT0JB/oh8lAAAAABJRU5ErkJggg==';
 
-document.body.appendChild(createElement(
+document.body.parentNode.style.width = '100%';
+document.body.parentNode.style.height = '100%';
+document.body.style.margin = '0';
+document.body.style.padding = '0';
+document.body.style.width = '100%';
+document.body.style.height = '100%';
+
+var olddom = b.mobilePortrait(
     b.column(
         b.box({ expand: true }, b.row(
             b.box(
@@ -47,4 +54,14 @@ document.body.appendChild(createElement(
             )
         )
     )
-));
+);
+
+var dom = b.mobilePortrait(
+    b.area({ left: 0, top: 0, width: 48, height: 48 }, b.pad(5, b.box({
+        backgroundColor: '#fff', borderRadius: 3
+    }, b.image(32, 32, hamburgerIcon)))),
+    b.area({ right: 0, top: 0, width: 48, height: 48 }),
+    b.area({ left: 48, top: 0, right: 48, height: 48 }, b.image(48, 48, topBarLogo))
+);
+
+document.body.appendChild(createElement(dom));

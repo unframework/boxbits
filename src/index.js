@@ -16,7 +16,7 @@ document.getElementsByTagName('head')[0].appendChild((function (html) {
     return span.firstChild;
 })('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />'));
 
-module.exports = {
+var b = {
     column: function() {
         var specList = Array.prototype.slice.call(arguments, 0);
 
@@ -49,19 +49,6 @@ module.exports = {
                 flex: 1
             }
         }, vdom);
-    },
-
-    box: function(opts, content) {
-        return h('div', {
-            style: {
-                margin: opts.expand ? 0 : 'auto', // center or expand in flex
-                padding: (opts.padding || 0) * 1 + 'px',
-                borderRadius: (opts.borderRadius || 0) * 1 + 'px',
-                backgroundColor: opts.backgroundColor || 'transparent',
-                display: 'flex',
-                flexDirection: 'inherit' // @todo this just seems like an intuitive value
-            }
-        }, content);
     },
 
     button: function() {
@@ -151,5 +138,82 @@ module.exports = {
                 height: height + 'px'
             }
         });
+    },
+
+
+    // testing abs-layout
+    area: function(options) {
+        var contents = Array.prototype.slice.call(arguments, 1);
+
+        return h('div', {
+            style: {
+                position: 'absolute',
+
+                left: (options.left !== undefined ? options.left + 'px' : 'auto'),
+                top: (options.top !== undefined ? options.top + 'px' : 'auto'),
+                right: (options.right !== undefined ? options.right + 'px' : 'auto'),
+                bottom: (options.bottom !== undefined ? options.bottom + 'px' : 'auto'),
+
+                width: (options.left !== undefined && options.right !== undefined ? 'auto' : options.width + 'px'),
+                height: (options.top !== undefined && options.bottom !== undefined ? 'auto' : options.height + 'px')
+            }
+        }, contents);
+    },
+
+    pad: function (pad) {
+        var contents = Array.prototype.slice.call(arguments, 1);
+
+        return b.area({ left: pad, top: pad, right: pad, bottom: pad }, contents);
+    },
+
+    image: function(width, height, imageData) {
+        return h('div', {
+            style: {
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                background: 'url(data:application/octet-stream;base64,' + imageData + ') no-repeat center',
+                backgroundSize: 1 * width + 'px ' + 1 * height + 'px'
+            }
+        });
+    },
+
+    box: function(options) {
+        var contents = Array.prototype.slice.call(arguments, 1);
+
+        return h('div', {
+            style: {
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                borderRadius: (options.borderRadius || 0) * 1 + 'px',
+                backgroundColor: options.backgroundColor || 'transparent'
+            }
+        }, contents);
+    },
+
+    mobilePortrait: function () {
+        var contents = Array.prototype.slice.call(arguments, 0);
+
+        return h('div', {
+            style: {
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                margin: '-360px -240px',
+                width: '480px',
+                height: '720px',
+                background: '#ecf0f1',
+                border: '3px #95a5a6 solid',
+                borderRadius: '3px',
+                boxShadow: '3px 3px 0 #bdc3c7'
+            }
+        }, contents);
     }
 };
+
+module.exports = b;
