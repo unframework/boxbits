@@ -2,7 +2,7 @@
   "name": "boxbits",
   "version": "0.0.0",
   "dependencies": {
-    "virtual-dom": "^2.0.1"
+    "vdom-live": "^1.0.4"
   },
   "main": "src/index.js"
 }
