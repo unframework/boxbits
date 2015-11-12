@@ -75,7 +75,7 @@ function run(cb) {
 
         // start up the render loop and attach to body
         var dom = renderLive(function () {
-            var screenBody = screenBodyCallback(b, h);
+            var screenBody = screenBodyCallback(720, 480);
 
             return h('div', {
                 style: {
