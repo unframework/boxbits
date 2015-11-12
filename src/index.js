@@ -24,7 +24,7 @@ function factory(h) {
                     top: y + 'px',
                     width: width + 'px',
                     height: height + 'px',
-                    border: '2px rgb(47, 105, 87) solid',
+                    boxShadow: 'inset 0 0 5px rgba(47, 105, 87, 0.5)',
                     borderRadius: '3px',
                     backgroundColor: 'rgba(47, 105, 87, 0.1)'
                 }
