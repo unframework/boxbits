@@ -24,7 +24,7 @@ function factory(h) {
                     top: y + 'px',
                     width: width + 'px',
                     height: height + 'px',
-                    boxShadow: 'inset 0 0 5px rgba(47, 105, 87, 0.5)',
+                    boxShadow: 'inset 0 0 2px rgba(47, 105, 87, 0.8)',
                     borderRadius: '3px',
                     backgroundColor: 'rgba(47, 105, 87, 0.1)'
                 }
@@ -86,9 +86,9 @@ function run(cb) {
                     margin: '-250px -370px',
                     width: '740px',
                     height: '500px',
-                    background: 'repeating-linear-gradient(45deg, #112B44 0px, #112B44 10px, #214B74 10px, #214B74 20px)',
+                    background: 'repeating-linear-gradient(45deg, #E68000 0px, #E68000 40px, #711113 40px, #711113 80px)',
                     borderRadius: '5px',
-                    boxShadow: '5px 5px 0 #ad9e7e'
+                    boxShadow: '3px 3px 0 rgba(0, 0, 0, 0.2)'
                 }
             }, h('div', {
                 style: {
@@ -100,7 +100,7 @@ function run(cb) {
                     overflow: 'hidden',
                     borderRadius: '3px',
                     background: '#F5FAEF',
-                    boxShadow: 'inset 1px 1px 7px -2px #214B74'
+                    boxShadow: 'inset 1px 1px 5px -1px #411113'
                 }
             }, screenBody));
         });
