@@ -1,5 +1,7 @@
 var vdomLive = require('vdom-live');
 
+var backgroundCss = require('./backgroundCss');
+
 // note: by default, parent dictates display? or opposite?
 // seems as though many elements have a fixed size, so it's more likely for compound parent to listen to children
 
@@ -11,28 +13,22 @@ var vdomLive = require('vdom-live');
 
 function factory(h) {
     var b = {
-        area: function(options) {
-            var contents = Array.prototype.slice.call(arguments, 1);
+        box: function(x, y, width, height) {
+            var contents = Array.prototype.slice.call(arguments, 4);
 
             return h('div', {
                 style: {
                     position: 'absolute',
-
-                    left: (options.left !== undefined ? options.left + 'px' : 'auto'),
-                    top: (options.top !== undefined ? options.top + 'px' : 'auto'),
-                    right: (options.right !== undefined ? options.right + 'px' : 'auto'),
-                    bottom: (options.bottom !== undefined ? options.bottom + 'px' : 'auto'),
-
-                    width: (options.left !== undefined && options.right !== undefined ? 'auto' : options.width + 'px'),
-                    height: (options.top !== undefined && options.bottom !== undefined ? 'auto' : options.height + 'px')
+                    boxSizing: 'border-box',
+                    left: x + 'px',
+                    top: y + 'px',
+                    width: width + 'px',
+                    height: height + 'px',
+                    border: '2px rgb(47, 105, 87) solid',
+                    borderRadius: '3px',
+                    backgroundColor: 'rgba(47, 105, 87, 0.1)'
                 }
             }, contents);
-        },
-
-        pad: function (pad) {
-            var contents = Array.prototype.slice.call(arguments, 1);
-
-            return b.area({ left: pad, top: pad, right: pad, bottom: pad }, contents);
         },
 
         image: function(width, height, imageData) {
@@ -47,22 +43,6 @@ function factory(h) {
                     backgroundSize: 1 * width + 'px ' + 1 * height + 'px'
                 }
             });
-        },
-
-        box: function(options) {
-            var contents = Array.prototype.slice.call(arguments, 1);
-
-            return h('div', {
-                style: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    borderRadius: (options.borderRadius || 0) * 1 + 'px',
-                    backgroundColor: options.backgroundColor || 'transparent'
-                }
-            }, contents);
         }
     };
 
@@ -84,6 +64,7 @@ function run(cb) {
     document.body.style.padding = '0';
     document.body.style.width = '100%';
     document.body.style.height = '100%';
+    document.body.style.background = backgroundCss;
 
     // enter the vdom-live zone
     vdomLive(function (renderLive, h) {
@@ -99,17 +80,29 @@ function run(cb) {
             return h('div', {
                 style: {
                     position: 'absolute',
+                    boxSizing: 'content-box',
                     top: '50%',
                     left: '50%',
-                    margin: '-240px -360px',
-                    width: '720px',
-                    height: '480px',
-                    background: '#ecf0f1',
-                    border: '3px #95a5a6 solid',
-                    borderRadius: '3px',
-                    boxShadow: '3px 3px 0 #bdc3c7'
+                    margin: '-250px -370px',
+                    width: '740px',
+                    height: '500px',
+                    background: 'repeating-linear-gradient(45deg, #112B44 0px, #112B44 10px, #214B74 10px, #214B74 20px)',
+                    borderRadius: '5px',
+                    boxShadow: '5px 5px 0 #ad9e7e'
                 }
-            }, screenBody);
+            }, h('div', {
+                style: {
+                    position: 'absolute',
+                    top: '10px',
+                    left: '10px',
+                    bottom: '10px',
+                    right: '10px',
+                    overflow: 'hidden',
+                    borderRadius: '3px',
+                    background: '#F5FAEF',
+                    boxShadow: 'inset 1px 1px 7px -2px #214B74'
+                }
+            }, screenBody));
         });
 
         document.body.appendChild(dom);
