@@ -13,6 +13,9 @@ var backgroundCss = require('./backgroundCss');
 
 function factory(h) {
     var b = {
+        screenWidth: 720,
+        screenHeight: 480,
+
         box: function(x, y, width, height) {
             var contents = Array.prototype.slice.call(arguments, 4);
 
@@ -75,7 +78,9 @@ function run(cb) {
 
         // start up the render loop and attach to body
         var dom = renderLive(function () {
-            var screenBody = screenBodyCallback(720, 480);
+            var screenBody = screenBodyCallback();
+            var paddedWidth = (b.screenWidth + 20);
+            var paddedHeight = (b.screenHeight + 20);
 
             return h('div', {
                 style: {
@@ -83,9 +88,9 @@ function run(cb) {
                     boxSizing: 'content-box',
                     top: '50%',
                     left: '50%',
-                    margin: '-250px -370px',
-                    width: '740px',
-                    height: '500px',
+                    margin: '-' + (paddedHeight / 2) + 'px -' + (paddedWidth / 2) + 'px',
+                    width: paddedWidth + 'px',
+                    height: paddedHeight + 'px',
                     background: 'repeating-linear-gradient(45deg, #E68000 0px, #E68000 40px, #711113 40px, #711113 80px)',
                     borderRadius: '5px',
                     boxShadow: '3px 3px 0 rgba(0, 0, 0, 0.2)'
