@@ -65,8 +65,8 @@ function factory(h) {
                     position: 'absolute',
                     left: '0px',
                     top: '0px',
-                    width: '0px',
-                    height: '0px',
+                    right: '0px',
+                    bottom: '0px',
                     boxShadow: 'inset 0 0 2px rgba(47, 105, 87, 0.8)',
                     borderRadius: '3px',
                     backgroundColor: 'rgba(47, 105, 87, 0.1)'
