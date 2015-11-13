@@ -79,8 +79,8 @@ function run(cb) {
         // start up the render loop and attach to body
         var dom = renderLive(function () {
             var screenBody = screenBodyCallback();
-            var paddedWidth = (b.screenWidth + 20);
-            var paddedHeight = (b.screenHeight + 20);
+            var paddedWidth = (b.screenWidth + 10);
+            var paddedHeight = (b.screenHeight + 10);
 
             return h('div', {
                 style: {
@@ -91,17 +91,17 @@ function run(cb) {
                     margin: '-' + (paddedHeight / 2) + 'px -' + (paddedWidth / 2) + 'px',
                     width: paddedWidth + 'px',
                     height: paddedHeight + 'px',
-                    background: 'repeating-linear-gradient(45deg, #E68000 0px, #E68000 40px, #711113 40px, #711113 80px)',
+                    background: 'repeating-linear-gradient(45deg, #EFC84A 0px, #EFC84A 40px, #DBB538 40px, #DBB538 80px)',
                     borderRadius: '5px',
-                    boxShadow: '3px 3px 0 rgba(0, 0, 0, 0.2)'
+                    boxShadow: '1px 1px 7px -1px rgba(0, 0, 0, 0.3)'
                 }
             }, h('div', {
                 style: {
                     position: 'absolute',
-                    top: '10px',
-                    left: '10px',
-                    bottom: '10px',
-                    right: '10px',
+                    top: '5px',
+                    left: '5px',
+                    bottom: '5px',
+                    right: '5px',
                     overflow: 'hidden',
                     borderRadius: '3px',
                     background: '#F5FAEF',
