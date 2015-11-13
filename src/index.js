@@ -12,6 +12,19 @@ var backgroundCss = require('./backgroundCss');
 // avoid relying on variable things like text for sizing (what about height?)
 
 function factory(h) {
+    function shellAt(x, y, width, height) {
+        // @todo wrap in another shell
+        return b.box(x, y, width, height, this);
+    }
+
+    function makeShell(vnode) {
+        var shell = [ vnode ];
+
+        shell.at = shellAt;
+
+        return shell;
+    }
+
     function renderCenteredContent(contents) {
         return h('div', {
             style: {
@@ -56,18 +69,18 @@ function factory(h) {
         },
 
         text: function (string) {
-            return renderCenteredContent([ h('span', {
+            return makeShell(renderCenteredContent([ h('span', {
                 style: {
                     fontFamily: 'Open Sans',
                     fontSize: '20px',
                     fontWeight: '300',
                     color: '#0B1920'
                 }
-            }, string.toString()) ]);
+            }, string.toString()) ]));
         },
 
         button: function (text, onclick) {
-            return renderCenteredContent([ h('button', {
+            return makeShell(renderCenteredContent([ h('button', {
                 onclick: onclick,
                 style: {
                     display: 'inline-block',
@@ -80,11 +93,11 @@ function factory(h) {
                     borderRadius: '5px',
                     color: '#86C270'
                 }
-            }, [ text.toString() ]) ]);
+            }, [ text.toString() ]) ]));
         },
 
         image: function(width, height, imageData) {
-            return h('div', {
+            return makeShell(h('div', {
                 style: {
                     position: 'absolute',
                     left: 0,
@@ -94,7 +107,7 @@ function factory(h) {
                     background: 'url(data:application/octet-stream;base64,' + imageData + ') no-repeat center',
                     backgroundSize: 1 * width + 'px ' + 1 * height + 'px'
                 }
-            });
+            }));
         }
     };
 
