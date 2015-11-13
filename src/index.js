@@ -77,9 +77,9 @@ function factory(h) {
         text: function (string) {
             return makeShell(renderCenteredContent([ h('span', {
                 style: {
-                    fontFamily: 'Open Sans',
+                    fontFamily: 'Roboto',
                     fontSize: '20px',
-                    fontWeight: '300',
+                    fontWeight: '400',
                     color: '#0B1920'
                 }
             }, string.toString()) ]));
@@ -91,9 +91,9 @@ function factory(h) {
                 style: {
                     display: 'inline-block',
                     padding: '5px 20px',
-                    fontFamily: 'Open Sans',
+                    fontFamily: 'Roboto',
                     fontSize: '20px',
-                    fontWeight: '300',
+                    fontWeight: '400',
                     background: '#2F6957',
                     border: '0',
                     borderRadius: '5px',
@@ -127,7 +127,7 @@ function run(cb) {
         var span = document.createElement('span');
         span.innerHTML = html;
         return span.firstChild;
-    })('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300" type="text/css" />'));
+    })('<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400" type="text/css" />'));
 
     document.body.parentNode.style.width = '100%';
     document.body.parentNode.style.height = '100%';
