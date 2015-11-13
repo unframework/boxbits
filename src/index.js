@@ -12,6 +12,27 @@ var backgroundCss = require('./backgroundCss');
 // avoid relying on variable things like text for sizing (what about height?)
 
 function factory(h) {
+    function renderCenteredContent(contents) {
+        return h('div', {
+            style: {
+                position: 'absolute',
+                display: 'table',
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+                width: '100%',
+                height: '100%'
+            }
+        }, [ h('div', {
+            style: {
+                display: 'table-cell',
+                textAlign: 'center',
+                verticalAlign: 'middle'
+            }
+        }, contents) ]);
+    }
+
     var b = {
         screenWidth: 720,
         screenHeight: 480,
@@ -32,6 +53,34 @@ function factory(h) {
                     backgroundColor: 'rgba(47, 105, 87, 0.1)'
                 }
             }, contents);
+        },
+
+        text: function (string) {
+            return renderCenteredContent([ h('span', {
+                style: {
+                    fontFamily: 'Open Sans',
+                    fontSize: '20px',
+                    fontWeight: '300',
+                    color: '#0B1920'
+                }
+            }, string.toString()) ]);
+        },
+
+        button: function (text, onclick) {
+            return renderCenteredContent([ h('button', {
+                onclick: onclick,
+                style: {
+                    display: 'inline-block',
+                    padding: '5px 20px',
+                    fontFamily: 'Open Sans',
+                    fontSize: '20px',
+                    fontWeight: '300',
+                    background: '#2F6957',
+                    border: '0',
+                    borderRadius: '5px',
+                    color: '#86C270'
+                }
+            }, [ text.toString() ]) ]);
         },
 
         image: function(width, height, imageData) {
