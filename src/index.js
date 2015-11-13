@@ -97,9 +97,65 @@ function factory(h) {
                     background: '#2F6957',
                     border: '0',
                     borderRadius: '5px',
-                    color: '#86C270'
+                    color: '#F5FAEF'
                 }
             }, [ text.toString() ]) ]));
+        },
+
+        form: function () {
+            // last argument is the submit callback
+            var contents = Array.prototype.slice.call(arguments, 0);
+            var onsubmit = contents.pop();
+
+            return makeShell(renderCenteredContent([ h('form', {
+                onsubmit: function (e) {
+                    e.preventDefault();
+
+                    var fields = this.getElementsByTagName('textarea');
+                    var args = [];
+
+                    for (var i = 0; i < fields.length; i += 1) {
+                        args.push(fields[i].value);
+                    }
+
+                    onsubmit.apply(null, args);
+                },
+                style: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    margin: 0,
+                    padding: 0,
+                    background: 'repeating-linear-gradient(45deg, rgba(47, 105, 87, 0.1) 0px, rgba(47, 105, 87, 0.1) 40px, rgba(27, 55, 47, 0.1) 40px, rgba(27, 55, 47, 0.1) 80px)'
+                }
+            }, contents) ]));
+        },
+
+        field: function (text) {
+            return makeShell(h('textarea', {
+                onsubmit: onsubmit,
+                placeholder: text,
+                style: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 0,
+                    width: '100%',
+                    height: '100%',
+                    margin: 0,
+                    padding: '5px',
+                    fontFamily: 'Roboto',
+                    fontSize: '16px',
+                    fontWeight: '400',
+                    color: '#2F6957',
+                    background: '#fff'
+                }
+            }));
+        },
+
+        submit: function (text) {
+            return b.button(text);
         },
 
         image: function(width, height, imageData) {
