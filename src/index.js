@@ -13,8 +13,15 @@ var backgroundCss = require('./backgroundCss');
 
 function factory(h) {
     function shellAt(x, y, width, height) {
-        // @todo wrap in another shell
-        return b.box(x, y, width, height, this);
+        return makeShell(h('div', {
+            style: {
+                position: 'absolute',
+                left: x + 'px',
+                top: y + 'px',
+                width: width + 'px',
+                height: height + 'px',
+            }
+        }, this));
     }
 
     function makeShell(vnode) {
@@ -50,22 +57,21 @@ function factory(h) {
         screenWidth: 720,
         screenHeight: 480,
 
-        box: function(x, y, width, height) {
-            var contents = Array.prototype.slice.call(arguments, 4);
+        box: function() {
+            var contents = Array.prototype.slice.call(arguments, 0);
 
-            return h('div', {
+            return makeShell(h('div', {
                 style: {
                     position: 'absolute',
-                    boxSizing: 'border-box',
-                    left: x + 'px',
-                    top: y + 'px',
-                    width: width + 'px',
-                    height: height + 'px',
+                    left: '0px',
+                    top: '0px',
+                    width: '0px',
+                    height: '0px',
                     boxShadow: 'inset 0 0 2px rgba(47, 105, 87, 0.8)',
                     borderRadius: '3px',
                     backgroundColor: 'rgba(47, 105, 87, 0.1)'
                 }
-            }, contents);
+            }, contents));
         },
 
         text: function (string) {
