@@ -66,10 +66,7 @@ function factory(h) {
                     left: '0px',
                     top: '0px',
                     right: '0px',
-                    bottom: '0px',
-                    boxShadow: 'inset 0 0 2px rgba(47, 105, 87, 0.8)',
-                    borderRadius: '3px',
-                    backgroundColor: 'rgba(47, 105, 87, 0.1)'
+                    bottom: '0px'
                 }
             }, contents));
         },
@@ -127,8 +124,7 @@ function factory(h) {
                     right: 0,
                     bottom: 0,
                     margin: 0,
-                    padding: 0,
-                    background: 'repeating-linear-gradient(45deg, rgba(47, 105, 87, 0.1) 0px, rgba(47, 105, 87, 0.1) 40px, rgba(27, 55, 47, 0.1) 40px, rgba(27, 55, 47, 0.1) 80px)'
+                    padding: 0
                 }
             }, contents) ]));
         },
@@ -149,7 +145,7 @@ function factory(h) {
                     fontSize: '16px',
                     fontWeight: '400',
                     color: '#2F6957',
-                    background: '#fff'
+                    background: '#f8f8fa'
                 }
             }));
         },
@@ -191,7 +187,7 @@ function run(cb) {
     document.body.style.padding = '0';
     document.body.style.width = '100%';
     document.body.style.height = '100%';
-    document.body.style.background = backgroundCss;
+    document.body.style.background = '#f8f8fa';
 
     // enter the vdom-live zone
     vdomLive(function (renderLive, h) {
@@ -203,8 +199,6 @@ function run(cb) {
         // start up the render loop and attach to body
         var dom = renderLive(function () {
             var screenBody = screenBodyCallback();
-            var paddedWidth = (b.screenWidth + 10);
-            var paddedHeight = (b.screenHeight + 10);
 
             return h('div', {
                 style: {
@@ -212,26 +206,13 @@ function run(cb) {
                     boxSizing: 'content-box',
                     top: '50%',
                     left: '50%',
-                    margin: '-' + (paddedHeight / 2) + 'px -' + (paddedWidth / 2) + 'px',
-                    width: paddedWidth + 'px',
-                    height: paddedHeight + 'px',
-                    background: 'repeating-linear-gradient(45deg, #EFC84A 0px, #EFC84A 40px, #DBB538 40px, #DBB538 80px)',
-                    borderRadius: '5px',
-                    boxShadow: '1px 1px 7px -1px rgba(0, 0, 0, 0.3)'
+                    margin: '-' + (b.screenHeight / 2 + 1) + 'px -' + (b.screenWidth / 2 + 1) + 'px',
+                    width: b.screenWidth + 'px',
+                    height: b.screenHeight + 'px',
+                    border: '1px solid #f0f0f8',
+                    background: '#fff',
                 }
-            }, h('div', {
-                style: {
-                    position: 'absolute',
-                    top: '5px',
-                    left: '5px',
-                    bottom: '5px',
-                    right: '5px',
-                    overflow: 'hidden',
-                    borderRadius: '3px',
-                    background: '#F5FAEF',
-                    boxShadow: 'inset 1px 1px 5px -1px #411113'
-                }
-            }, screenBody));
+            }, screenBody);
         });
 
         document.body.appendChild(dom);
